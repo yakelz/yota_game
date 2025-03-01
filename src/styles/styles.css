@@ -1,0 +1,116 @@
+body,
+html {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+#game-container {
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+	background: #eee;
+}
+#game-board {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	transform-origin: 0 0;
+}
+.card {
+	position: absolute;
+	width: 8vw;
+	height: 8vw;
+	border: 2px solid #333;
+	border-radius: 8px;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 2vw;
+	user-select: none;
+
+	transition: transform 0.3s ease;
+}
+
+.grid-cell {
+	position: absolute;
+	width: 0; /* размеры зададим динамически через JS */
+	height: 0;
+	border-radius: 8px;
+	border: 1px solid lightgrey;
+	box-sizing: border-box;
+	pointer-events: none;
+}
+
+/* Контейнер для карт игрока */
+#player-hand {
+	position: fixed;
+	bottom: 5%;
+	left: 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	gap: 10px;
+}
+/* Карты в руке располагаются с помощью flex (без абсолютного позиционирования) */
+#player-hand .card {
+	position: static;
+	margin: 0 10px;
+	cursor: pointer;
+}
+.card.selected {
+	transform: translateY(-3vh);
+}
+.highlight {
+	position: absolute;
+	border-radius: 8px;
+	border: 2px dashed blue;
+	background: rgba(0, 0, 255, 0.1);
+	box-sizing: border-box;
+	cursor: pointer;
+}
+/* Стили для UI-контейнера с кнопкой завершения хода */
+.ui {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	z-index: 2000;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	font-family: sans-serif;
+}
+.ui button {
+	padding: 5px 10px;
+	font-size: 16px;
+	cursor: pointer;
+}
+.test-controls {
+	background: #fff;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+.test-controls label {
+	display: block;
+	margin-bottom: 5px;
+}
+.test-controls select {
+	margin-left: 5px;
+}
+
+#test-card {
+	position: static;
+	border: 2px solid #333;
+	border-radius: 8px;
+	background: #fff;
+	width: 8vw;
+	height: 8vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 2vw;
+	user-select: none;
+}
