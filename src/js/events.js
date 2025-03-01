@@ -16,22 +16,6 @@ export function getGridPosition(clientX, clientY) {
 	return { x: gridX, y: gridY };
 }
 
-// Обновление тестовой карты – читаем значения из селектов и обновляем элемент #test-card
-export function updateTestCard() {
-	const color = document.getElementById('test-color').value;
-	const shape = document.getElementById('test-shape').value;
-	const number = parseInt(document.getElementById('test-number').value);
-	gameState.testCard.color = color;
-	gameState.testCard.shape = shape;
-	gameState.testCard.number = number;
-
-	const testCardEl = document.getElementById('test-card');
-	testCardEl.style.backgroundColor = color;
-	testCardEl.innerHTML = `${shape}<br>${number}`;
-	renderPlayerHand();
-	renderBoard(selectedCardIndex !== null ? gameState.playerHand[selectedCardIndex] : null);
-}
-
 export function setupEventListeners(autoFitCallback) {
 	const boardElement = document.getElementById('game-board');
 	const handDiv = document.getElementById('player-hand');
@@ -86,19 +70,14 @@ export function setupEventListeners(autoFitCallback) {
 			card: placedCard,
 			pos: pos,
 			removedIndex: selectedCardIndex,
-			isTestCard: selectedCardIndex === gameState.playerHand.length - 1,
+			// isTestCard: selectedCardIndex === gameState.playerHand.length - 1,
 		});
 
 		// boardCards[pos.x + ',' + pos.y] = playerHand[selectedCardIndex];
 		// console.log(`Координаты карточки: x = ${pos.x}, y = ${pos.y}`);
 		// playerHand.splice(selectedCardIndex, 1);
 
-		// Если сыграна тестовая карта – возвращаем её в руку
-		const isTestCard = selectedCardIndex === gameState.playerHand.length - 1;
 		gameState.playerHand.splice(selectedCardIndex, 1);
-		if (isTestCard) {
-			gameState.playerHand.push(gameState.testCard);
-		}
 
 		selectedCardIndex = null;
 		renderPlayerHand();
@@ -138,9 +117,6 @@ export function setupEventListeners(autoFitCallback) {
 			alert('Нет действий для отмены.');
 		}
 	});
-
-	// Кнопка обновления тестовой карты
-	document.getElementById('updateTestCard').addEventListener('click', updateTestCard);
 
 	// Панорамирование мышью
 	let isPanning = false;

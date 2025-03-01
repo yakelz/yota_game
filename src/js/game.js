@@ -8,7 +8,6 @@ export const gameState = {
 	playerHand: [], // Карты игрока
 	currentTurnPlacements: [], // Координаты карт, сыгранных в текущем ходе
 	turnOrientation: null, // Направление линии: "horizontal" или "vertical"
-	testCard: { color: 'yellow', shape: '●', number: 1 }, // Тестовая карта для отладки
 	undoStack: [], // Добавлено для отмены последнего размещения карточки
 };
 
@@ -218,8 +217,6 @@ export function getCandidateCells(selectedCard) {
 export function initGame() {
 	gameState.deck = shuffle(generateDeck());
 	gameState.playerHand = gameState.deck.splice(0, 4);
-	// Добавляем тестовую карту для отладки
-	gameState.playerHand.push(gameState.testCard);
 	// Ставим первую (центральную) карту на стол
 	const centerCard = gameState.deck.shift();
 	gameState.boardCards['0,0'] = centerCard;

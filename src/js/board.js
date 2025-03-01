@@ -98,9 +98,11 @@ export function renderBoard(selectedCard = null) {
 export function renderPlayerHand() {
 	const handDiv = document.getElementById('player-hand');
 	handDiv.innerHTML = '';
+	console.log(gameState.playerHand);
 	gameState.playerHand.forEach((card, index) => {
 		const cardEl = createCardElement(card);
 		cardEl.dataset.index = index;
 		handDiv.appendChild(cardEl);
 	});
+	renderBoard();
 }
