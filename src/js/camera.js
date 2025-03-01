@@ -9,6 +9,7 @@ export let camera = {
 	translateY: window.innerHeight / 2,
 };
 
+// Функция для анимации камеры (без изменений)
 export function animateCamera(targetScale, targetTranslateX, targetTranslateY, duration = 500) {
 	const startTime = performance.now();
 	const startScale = camera.scale;
@@ -36,6 +37,21 @@ export function animateCamera(targetScale, targetTranslateX, targetTranslateY, d
 	requestAnimationFrame(step);
 }
 
+// функция для мгновенной установки параметров камеры (без анимации, если duration=0)
+export function setCamera(newScale, newTranslateX, newTranslateY, duration = 0) {
+	animateCamera(newScale, newTranslateX, newTranslateY, duration);
+}
+
+// функция для мгновенного обновления параметров камеры (без анимации)
+export function updateCamera(newScale, newTranslateX, newTranslateY) {
+	camera.scale = newScale;
+	camera.translateX = newTranslateX;
+	camera.translateY = newTranslateY;
+	renderBoard();
+}
+
+// Изменённая функция автоадаптации: она вычисляет только координаты центра (x,y)
+// и оставляет текущий scale без изменений
 export function autoFitCamera() {
 	const keys = Object.keys(gameState.boardCards);
 	if (keys.length === 0) return;
@@ -56,23 +72,13 @@ export function autoFitCamera() {
 		if (bottom > maxY) maxY = bottom;
 	});
 
-	const boundingWidth = maxX - minX;
-	const boundingHeight = maxY - minY;
-	const margin = 0.2;
-	const desiredWidth = boundingWidth * (1 + margin);
-	const desiredHeight = boundingHeight * (1 + margin);
-
-	let newScale = Math.min(
-		dimensions.windowWidth / desiredWidth,
-		dimensions.windowHeight / desiredHeight
-	);
-	newScale = Math.min(Math.max(newScale, 0.5), 2);
-
 	const centerBBx = (minX + maxX) / 2;
 	const centerBBy = (minY + maxY) / 2;
 
-	const newTranslateX = dimensions.windowWidth / 2 - centerBBx * newScale;
-	const newTranslateY = dimensions.windowHeight / 2 - centerBBy * newScale;
+	// Вычисляем новые translateX и translateY, используя текущий camera.scale
+	const newTranslateX = dimensions.windowWidth / 2 - centerBBx * camera.scale;
+	const newTranslateY = dimensions.windowHeight / 2 - centerBBy * camera.scale;
 
-	animateCamera(newScale, newTranslateX, newTranslateY);
+	// Анимируем только смещение, оставляя scale без изменений
+	animateCamera(camera.scale, newTranslateX, newTranslateY);
 }
