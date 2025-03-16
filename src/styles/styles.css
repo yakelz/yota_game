@@ -1,3 +1,18 @@
+:root {
+	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+
+	color-scheme: light dark;
+
+	background-color: #242424;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
 body,
 html {
 	margin: 0;
@@ -10,36 +25,33 @@ html {
 	position: relative;
 	background: #eee;
 }
-#game-board {
+#game-field {
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	transform-origin: 0 0;
 }
-.card {
+
+.grid-cell {
 	position: absolute;
+	border-radius: 8px;
+	/* width и height в renderBoard() */
+	border: 1px solid lightgrey;
+	box-sizing: border-box;
+}
+.card {
 	width: 8vw;
 	height: 8vw;
-	border: 2px solid #333;
+	border: 1px solid #c9c9c9;
 	border-radius: 8px;
-	background: #fff;
+	background: linear-gradient(90deg, #ffffff, #e0e0e0);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 2vw;
 	user-select: none;
-
+	filter: drop-shadow(0 0 1px rgba(32, 32, 32, 0.4));
 	transition: transform 0.3s ease;
-}
-
-.grid-cell {
-	position: absolute;
-	width: 0; /* размеры зададим динамически через JS */
-	height: 0;
-	border-radius: 8px;
-	border: 1px solid lightgrey;
-	box-sizing: border-box;
-	pointer-events: none;
 }
 
 /* Контейнер для карт игрока */
